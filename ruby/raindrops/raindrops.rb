@@ -6,11 +6,10 @@ class Raindrops
     7 => 'Plong'
   }
 
-  def self.convert1(number)
-    return "#{number}" if indivisible?(number)
-    FACTORS_TABLE.each_with_object('') do |key_value, sound|
-      sound << key_value[1] if number % key_value[0] == 0 
-    end
+  def self.convert(number)
+    indivisible?(number) ? sound = number.to_s : sound = ''
+    FACTORS_TABLE.each { |k, v| sound << v if number % k == 0 }
+    sound
   end
 
   def self.convert2(number)
@@ -21,8 +20,8 @@ class Raindrops
     sound.empty? ? number.to_s : sound
   end
 
-  def self.convert(number)
-    return "#{number}" if indivisible?(number)
+  def self.convert3(number)
+    return number.to_s if indivisible?(number)
     FACTORS_TABLE.each_with_object('') do |pair, sound|
       sound << pair[1] if number % pair[0] == 0
     end
