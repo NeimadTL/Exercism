@@ -1,3 +1,10 @@
+class Fixnum
+  def factor_of?(factor)
+    self % factor == 0
+  end
+end
+
+
 class Raindrops
 
   FACTORS_TABLE = {
@@ -6,7 +13,7 @@ class Raindrops
     7 => 'Plong'
   }
 
-  def self.convert(number)
+  def self.convert1(number)
     indivisible?(number) ? sound = number.to_s : sound = ''
     FACTORS_TABLE.each { |k, v| sound << v if number % k == 0 }
     sound
@@ -26,6 +33,15 @@ class Raindrops
       sound << pair[1] if number % pair[0] == 0
     end
   end
+
+  def self.convert(number)
+    sound = FACTORS_TABLE.each_with_object('') do |(factor, note), sound|
+      sound << note if number.factor_of?(factor)
+    end
+    sound.empty? ? number.to_s : sound
+  end
+
+
 
 
 
