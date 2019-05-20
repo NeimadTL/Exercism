@@ -12,14 +12,11 @@ class Raindrops
     5 => 'Plang',
     7 => 'Plong'
   }
+
   attr_reader :intensity
 
-  def initialize(intensity)
-    @intensity = intensity
-  end
-
   def fall
-    make_noise(sound).to_s
+    noise.to_s
   end
 
   def self.convert(intensity)
@@ -27,14 +24,19 @@ class Raindrops
   end
 
   private
-  
-    def sound
+
+    def initialize(intensity)
+      @intensity = intensity
+      @sound = compose
+    end
+
+    def compose
       RULES.each_with_object('') do |(factor, note), sound|
         sound << note if intensity.factor_of?(factor)
       end
     end
 
-    def make_noise(sound)
-      sound.empty? ? intensity : sound
+    def noise
+      @sound.empty? ? intensity : @sound
     end
 end
